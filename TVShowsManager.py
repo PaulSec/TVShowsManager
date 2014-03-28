@@ -21,7 +21,6 @@ def download(magnet):
 
     cmd = "transmission-remote "
     cmd = cmd + "%s -n %s:%s --add '%s'" % (IP, USER, PASS, magnet)
-    print cmd
     os.system(cmd)
 
 
@@ -38,8 +37,6 @@ def iterate_on_seasons(seasons, name):
     old_season = int(parser.get(serie, "season"))
     old_episode = int(parser.get(serie, "episode"))
 
-    print "Old season was %s" % (old_season)
-    print "Old episode was %s" % (old_episode)
     for season in seasons:
         for episode in seasons[season]:
             if (season > old_season or (season == old_season and episode > old_episode)):
