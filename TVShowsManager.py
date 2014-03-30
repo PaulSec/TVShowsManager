@@ -47,7 +47,9 @@ def iterate_on_seasons(seasons, name):
     old_season = int(parser.get(serie, "season"))
     old_episode = int(parser.get(serie, "episode"))
 
-    display_message("Found %s seasons" % (len(seasons) + 1))
+    display_message("Old season = %s " % (old_season))
+    display_message("Old episode = %s " % (old_episode))
+
     for season in seasons:
         for episode in seasons[season]:
             if (season > old_season or (season == old_season and episode > old_episode)):
@@ -65,7 +67,7 @@ def update_config_file():
     with open(CONFIG_FILE, 'wb') as configfile:
         parser.write(configfile)
 
-if (sys.argv[1] == "--v"):
+if (len(sys.argv) > 1 and sys.argv[1] == "--v"):
     VERBOSE_MODE = True
 
 while True:
@@ -77,9 +79,9 @@ while True:
                 display_message("Checking for TV Show %s" % (serie))
                 test_api = EztvAPI().tv_show(serie)
                 iterate_on_seasons(test_api.seasons(), serie)
-                update_config_file()
             except Exception, err:
                 print Exception, err
         else:
             pass
+    update_config_file()
     time.sleep(float(TIMER * 10))
